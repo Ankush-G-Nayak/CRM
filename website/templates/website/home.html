@@ -1,0 +1,64 @@
+{% extends "website/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+    <!-- Check if there are any records -->
+    {% if records %}
+        <table class="table table-striped table-bordered caption-top table-hover">
+            <caption> <strong><em>Records</em></strong> </caption>
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone No</th>
+                    <th scope="col">Date of Creation</th>
+                    <th scope="col">Operation</th>
+                </tr>
+            </thead>
+
+            <tbody class="table-group-divider">
+                {% for record in records %}
+                    <tr>
+                        <td>{{ record.id }}</td>
+                        <td>{{ record.username }}</td>
+                        <td>{{ record.email }}</td>
+                        <td>{{ record.PhNo }}</td>
+                        <td>{{ record.Created }}</td>
+                        <td><a href="{% url 'record' record.id %}">Click Here to Update or Delete</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <br>
+
+        <a href="{% url 'reset_table' %}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete all records and reset the ID?')">
+            Reset Table and Delete All Records
+        </a>
+    {% else %}
+        <br>
+        <div class="alert alert-info">
+            <h4>No records available. Please add a record.</h4>
+            <a href="{% url 'addrec' %}" class="btn btn-primary">Add Record</a>
+        </div>
+    {% endif %}
+{% else %}
+    <div class="container">
+        <h3>Log In</h3>
+        <form method="POST" action="{% url 'home' %}">
+            {% csrf_token %}
+            <div class="mb-3">
+                <input type="username" class="form-control" name="username" placeholder="User name" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" class="form-control" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="btn btn-secondary">Log In</button>
+        </form>
+    </div>
+{% endif %}
+
+{% endblock content %}

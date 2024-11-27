@@ -1,0 +1,21 @@
+{% extends "website/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<br>
+<div class="card">
+  <div class="card-header">
+    {{ crec.username }}
+  </div>
+  <div class="card-body">
+    <strong>Contact Number: </strong><p class="card-text">{{ crec.PhNo }} <br>
+        <br>
+      <strong>Email: </strong> <br>{{ crec.email }} </p><br>
+      <strong>Email: </strong> <br>{{ crec.Created }} </p><br>
+  </div>
+</div>
+<br>
+<a href="{%url 'home' %}" class="btn btn-secondary">Go Back</a>
+<a href="{%url 'delete' crec.id%}" class="btn btn-danger">Delete</a>
+<a href="{%url 'updrec' crec.id %}" class="btn btn-secondary">Update</a>
+{% endblock content %}
